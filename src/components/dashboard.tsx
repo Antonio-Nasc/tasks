@@ -16,7 +16,6 @@ import {
   Tab,
   LinearProgress,
   Dialog,
-  useMediaQuery,
 } from "@mui/material"
 import {
   Add as AddIcon,
@@ -24,7 +23,6 @@ import {
   Logout as LogoutIcon,
   Menu as MenuIcon,
 } from "@mui/icons-material"
-import { useTheme } from "@mui/material/styles"
 import TaskList from "@/components/task-list"
 import TaskForm from "@/components/task-form"
 import TaskStats from "@/components/task-stats"
@@ -61,8 +59,6 @@ function a11yProps(index: number) {
 }
 
 export default function Dashboard() {
-  const theme = useTheme()
-  const [mobileOpen, setMobileOpen] = useState(false)
   const [tasks, setTasks] = useState<Task[]>([])
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [editingTask, setEditingTask] = useState<Task | null>(null)
@@ -82,10 +78,6 @@ export default function Dashboard() {
 
     fetchTasks();
   }, []);
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen)
-  }
 
   const addTask = (task: Task) => {
     setTasks([...tasks, { ...task, id: Date.now().toString() }])
@@ -126,7 +118,6 @@ export default function Dashboard() {
             color="inherit"
             aria-label="open drawer"
             edge="start"
-            onClick={handleDrawerToggle}
             sx={{ mr: 2, display: { md: "none" } }}
           >
             <MenuIcon />

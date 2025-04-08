@@ -61,7 +61,7 @@ export default function TaskForm({
     setTask({ ...task, category: e.target.value });
   };
 
-  const handleSubmit = (_e: React.FormEvent) => {
+  const handleSubmit = () => {
     onSubmitAction(task);
   };
 
