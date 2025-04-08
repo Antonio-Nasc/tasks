@@ -62,7 +62,6 @@ function a11yProps(index: number) {
 
 export default function Dashboard() {
   const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"))
   const [mobileOpen, setMobileOpen] = useState(false)
   const [tasks, setTasks] = useState<Task[]>([])
   const [isFormOpen, setIsFormOpen] = useState(false)
@@ -242,9 +241,9 @@ export default function Dashboard() {
               <TabPanel value={tabValue} index={0}>
                 <TaskList
                   tasks={tasks}
-                  onEdit={handleEditTask}
-                  onDelete={deleteTask}
-                  onStatusChange={(id, status) => {
+                  onEditAction={handleEditTask}
+                  onDeleteAction={deleteTask}
+                  onStatusChangeAction={(id, status) => {
                     setTasks(tasks.map((task) => (task.id === id ? { ...task, status } : task)))
                   }}
                 />
@@ -252,9 +251,9 @@ export default function Dashboard() {
               <TabPanel value={tabValue} index={1}>
                 <TaskList
                   tasks={tasks.filter((task) => task.status === TaskStatus.Todo)}
-                  onEdit={handleEditTask}
-                  onDelete={deleteTask}
-                  onStatusChange={(id, status) => {
+                  onEditAction={handleEditTask}
+                  onDeleteAction={deleteTask}
+                  onStatusChangeAction={(id, status) => {
                     setTasks(tasks.map((task) => (task.id === id ? { ...task, status } : task)))
                   }}
                 />
@@ -262,9 +261,9 @@ export default function Dashboard() {
               <TabPanel value={tabValue} index={2}>
                 <TaskList
                   tasks={tasks.filter((task) => task.status === TaskStatus.InProgress)}
-                  onEdit={handleEditTask}
-                  onDelete={deleteTask}
-                  onStatusChange={(id, status) => {
+                  onEditAction={handleEditTask}
+                  onDeleteAction={deleteTask}
+                  onStatusChangeAction={(id, status) => {
                     setTasks(tasks.map((task) => (task.id === id ? { ...task, status } : task)))
                   }}
                 />
@@ -272,9 +271,9 @@ export default function Dashboard() {
               <TabPanel value={tabValue} index={3}>
                 <TaskList
                   tasks={tasks.filter((task) => task.status === TaskStatus.Completed)}
-                  onEdit={handleEditTask}
-                  onDelete={deleteTask}
-                  onStatusChange={(id, status) => {
+                  onEditAction={handleEditTask}
+                  onDeleteAction={deleteTask}
+                  onStatusChangeAction={(id, status) => {
                     setTasks(tasks.map((task) => (task.id === id ? { ...task, status } : task)))
                   }}
                 />

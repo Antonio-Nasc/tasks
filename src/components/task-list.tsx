@@ -17,6 +17,7 @@ import {
   type SelectChangeEvent,
   Stack,
   Divider,
+  ChipProps,
 } from "@mui/material"
 import { MoreVert as MoreVertIcon, Edit as EditIcon, Delete as DeleteIcon } from "@mui/icons-material"
 import { useState } from "react"
@@ -24,12 +25,12 @@ import { type Task, TaskStatus, TaskPriority } from "@/lib/types"
 
 interface TaskListProps {
   tasks: Task[]
-  onEdit: (task: Task) => void
-  onDelete: (id: string) => void
-  onStatusChange: (id: string, status: TaskStatus) => void
+  onEditAction: (task: Task) => void
+  onDeleteAction: (id: string) => void
+  onStatusChangeAction: (id: string, status: TaskStatus) => void
 }
-
-export default function TaskList({ tasks, onEdit, onDelete, onStatusChange }: TaskListProps) {
+type ChipColor = ChipProps["color"]
+export default function TaskList({ tasks, onEditAction, onDeleteAction, onStatusChangeAction }: TaskListProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null)
 
@@ -46,23 +47,23 @@ export default function TaskList({ tasks, onEdit, onDelete, onStatusChange }: Ta
   const handleEdit = () => {
     const task = tasks.find((t) => t.id === selectedTaskId)
     if (task) {
-      onEdit(task)
+      onEditAction(task)
     }
     handleMenuClose()
   }
 
   const handleDelete = () => {
     if (selectedTaskId) {
-      onDelete(selectedTaskId)
+      onDeleteAction(selectedTaskId)
     }
     handleMenuClose()
   }
 
   const handleStatusChange = (event: SelectChangeEvent, taskId: string) => {
-    onStatusChange(taskId, event.target.value as TaskStatus)
+    onStatusChangeAction(taskId, event.target.value as TaskStatus)
   }
 
-  const getPriorityColor = (priority: TaskPriority) => {
+  const getPriorityColor = (priority: TaskPriority): { color: ChipColor; bgcolor: string } => {
     switch (priority) {
       case TaskPriority.High:
         return { color: "error", bgcolor: "error.light" }
@@ -74,8 +75,8 @@ export default function TaskList({ tasks, onEdit, onDelete, onStatusChange }: Ta
         return { color: "default", bgcolor: "grey.300" }
     }
   }
-
-  const getStatusColor = (status: TaskStatus) => {
+  
+  const getStatusColor = (status: TaskStatus): { color: ChipColor; bgcolor: string } => {
     switch (status) {
       case TaskStatus.Completed:
         return { color: "success", bgcolor: "success.light" }
@@ -126,13 +127,13 @@ export default function TaskList({ tasks, onEdit, onDelete, onStatusChange }: Ta
                 <Chip
                   label={task.priority}
                   size="small"
-                  color={getPriorityColor(task.priority).color as any}
+                 color={getPriorityColor(task.priority).color}
                   sx={{ bgcolor: getPriorityColor(task.priority).bgcolor }}
                 />
                 <Chip
                   label={task.status}
                   size="small"
-                  color={getStatusColor(task.status).color as any}
+                  color={getStatusColor(task.status).color}
                   sx={{ bgcolor: getStatusColor(task.status).bgcolor }}
                 />
                 <Chip label={task.category} size="small" variant="outlined" />
