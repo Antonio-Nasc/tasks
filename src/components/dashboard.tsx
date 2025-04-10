@@ -1,14 +1,11 @@
 "use client"
 
 import type React from "react"
-
 import { useState, useEffect } from "react"
 import {
-  AppBar,
   Box,
   Toolbar,
   Typography,
-  IconButton,
   Grid,
   Paper,
   Button,
@@ -19,15 +16,13 @@ import {
 } from "@mui/material"
 import {
   Add as AddIcon,
-  CheckCircle as CheckCircleIcon,
-  Logout as LogoutIcon,
-  Menu as MenuIcon,
 } from "@mui/icons-material"
 import TaskList from "@/components/task-list"
 import TaskForm from "@/components/task-form"
 import TaskStats from "@/components/task-stats"
 import { type Task, TaskStatus } from "@/lib/types"
 import { axiosInstance } from "@/services/TaskService"
+import { Header } from "./ui/header"
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -112,28 +107,7 @@ export default function Dashboard() {
 
   return (
     <Box sx={{ display: "flex", minHeight: "100vh" }}>
-      <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            sx={{ mr: 2, display: { md: "none" } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <CheckCircleIcon sx={{ mr: 1 }} />
-            <Typography variant="h6" noWrap component="div">
-              TaskMaster
-            </Typography>
-          </Box>
-          <Box sx={{ flexGrow: 1 }} />
-          <IconButton color="inherit">
-            <LogoutIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+      <Header />
       <Box
         component="main"
         sx={{
@@ -152,9 +126,6 @@ export default function Dashboard() {
               </Typography>
               <Typography variant="h4" component="div">
                 {tasks.length}
-              </Typography>
-              <Typography variant="body2" color="textSecondary">
-                +{Math.floor(Math.random() * 10)}% from last week
               </Typography>
             </Paper>
           </Grid>
